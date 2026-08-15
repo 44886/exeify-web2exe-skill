@@ -1,5 +1,7 @@
 # exeify-web2exe-skill
 
+> 🇨🇳 中文说明见 **[README.zh.md](README.zh.md)**
+
 An **[Agent Skills](https://agentskills.io)** skill that lets an AI assistant package a website —
 a local HTML/CSS/JS folder **or** an online URL — into a **standalone Windows `.exe`** that
 double-clicks to run with no install (renders via the system WebView2).
