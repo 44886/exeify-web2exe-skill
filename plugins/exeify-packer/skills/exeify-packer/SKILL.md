@@ -19,15 +19,18 @@ compatibility: "Windows only. The bundled exeify.exe is a Windows executable; pa
      https://github.com/44886/Exeify/releases/latest 下载最新的 `exeify-*-windows-x64.exe`，
      重命名为 `exeify.exe` 放到本 skill 目录后再用。
 
-## 检查 Exeify 是否有新版（建议顺带做一次，非阻塞）
-- 本 skill 内置的 Exeify 版本：**v0.4.0**。
-- 检查主仓库最新版：`GET https://api.github.com/repos/44886/Exeify/releases/latest`（带 header
-  `User-Agent: exeify-skill`），取 `tag_name`（形如 `v0.4.1`），与上面的内置版本比较。
-- 若最新版**更高** → 用**一句话**提示用户（**不要因此中断打包，仍照常出包**）：
-  「Exeify 有新版 `<tag>`（当前内置 v0.4.0）。可到 https://github.com/44886/Exeify/releases
-  下载最新 `exeify-*-windows-x64.exe` 替换本 skill 里的 `exeify.exe`；打包器界面里也有
-  『检查更新』可自更新。」
-- 无网络 / 请求失败 / 拿不到版本 → **静默跳过**，绝不影响打包。每次会话最多提示一次，别反复刷屏。
+## 检查 Exeify 是否有新版（可选、非阻塞；exe 已随 skill 内置，离线照常用）
+> exeify.exe **始终随本 skill 一起分发**，离线即可打包，此检查纯属锦上添花。
+1. 取**已安装版本**：运行 `exeify.exe version`（打印形如 `0.4.1` 后立即退出）。
+2. 取**最新版本**：`GET https://api.github.com/repos/44886/Exeify/releases/latest`
+   （带 header `User-Agent: exeify-skill`），读 `tag_name`（形如 `v0.4.2`）。
+3. 若最新版**更高**：
+   - 先一句话告知：「Exeify 有新版 `<tag>`（当前 `<installed>`）」。
+   - **征得用户同意后**，从该 release 下载 `exeify-*-windows-x64.exe`，覆盖本 skill 目录里的
+     `exeify.exe`（即 `${CLAUDE_SKILL_DIR}\exeify.exe`）；之后的打包即用新版。用户不同意就继续用内置版。
+- **访问不畅时**（不少中国大陆用户无法顺畅访问 GitHub）：检查或下载失败就**静默跳过**，
+  直接用**已内置**的 `exeify.exe` 正常打包——不依赖网络、不影响出包。
+- 别为此反复联网或刷屏，每次会话最多做一次。
 
 ## 向用户问清这些（缺就问，别乱猜）
 - **源**（二选一）：要打包的**本地网页目录**（含 index.html 的文件夹）**或**一个**在线网址**（http/https）。

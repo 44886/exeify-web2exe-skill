@@ -1,7 +1,7 @@
 {
   "name": "exeify-packer",
   "displayName": "Exeify Web→exe Packer",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "把网页目录或在线网址打包成独立的 Windows exe（双击即运行、免安装，用系统 WebView2 渲染）。Package a local website folder or an online URL into a standalone Windows .exe. Windows only.",
   "homepage": "https://github.com/44886/Exeify",
   "repository": "https://github.com/44886/exeify-web2exe-skill",
