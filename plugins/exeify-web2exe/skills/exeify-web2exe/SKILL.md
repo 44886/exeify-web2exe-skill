@@ -1,5 +1,5 @@
 ---
-name: exeify-packer
+name: exeify-web2exe
 description: "把网页打包成 Windows exe 的技能。当用户想把「一个本地 HTML/CSS/JS 网页文件夹」或「一个在线网址」打包成可双击运行、免安装的独立 Windows .exe（用系统自带 WebView2 渲染，终端用户无需装任何东西）时使用；可设置窗口标题/尺寸/全屏、程序图标、启动页、源码保护等。仅 Windows。 | Use when the user wants to package a website — a local HTML/CSS/JS folder or an online URL — into a standalone, double-click-to-run Windows .exe (rendered via the system WebView2, no install for end users); supports window title/size/fullscreen, app icon, splash screen, and source protection. Windows only. | 触发/Triggers: 打包成exe、网页打包、网页转exe、把网址做成桌面程序、把文件夹做成exe、package website to exe、turn HTML folder into a desktop app、website to exe。"
 license: Apache-2.0
 compatibility: "Windows only. The bundled exeify.exe is a Windows executable; packed apps rely on WebView2, which is built into Windows 10/11. Not usable on macOS or Linux."

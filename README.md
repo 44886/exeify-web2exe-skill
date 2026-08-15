@@ -30,7 +30,7 @@ Add this repo as a plugin marketplace, then install the plugin:
 
 ```
 /plugin marketplace add 44886/exeify-web2exe-skill
-/plugin install exeify-packer@exeify
+/plugin install exeify-web2exe@exeify
 ```
 
 Done. The skill loads automatically when you ask to package a website into an exe.
@@ -42,7 +42,7 @@ Copy the skill directory into where your tool discovers skills. For Claude Code:
 
 ```bash
 git clone https://github.com/44886/exeify-web2exe-skill.git /tmp/exeify-skill
-cp -r /tmp/exeify-skill/plugins/exeify-packer/skills/exeify-packer ~/.claude/skills/exeify-packer
+cp -r /tmp/exeify-skill/plugins/exeify-web2exe/skills/exeify-web2exe ~/.claude/skills/exeify-web2exe
 ```
 
 The skill is a standard `SKILL.md` + bundled `exeify.exe`, so any tool supporting the
@@ -66,9 +66,9 @@ Run `exeify.exe pack --help` for the full list. Success prints `OK: <path>` (exi
 
 ```
 .claude-plugin/marketplace.json                 # marketplace manifest
-plugins/exeify-packer/
+plugins/exeify-web2exe/
 ├── .claude-plugin/plugin.json                  # plugin manifest
-└── skills/exeify-packer/
+└── skills/exeify-web2exe/
     ├── SKILL.md                                # the skill (instructions for the AI)
     └── exeify.exe                              # bundled Exeify packer (Windows)
 doc/cover.png · README.md · README.zh.md · LICENSE
@@ -76,7 +76,7 @@ doc/cover.png · README.md · README.zh.md · LICENSE
 
 ## Updating
 
-When a new Exeify version ships, replace `plugins/exeify-packer/skills/exeify-packer/exeify.exe`
+When a new Exeify version ships, replace `plugins/exeify-web2exe/skills/exeify-web2exe/exeify.exe`
 with the latest from [Exeify releases](https://github.com/44886/Exeify/releases). The CLI contract
 is stable (`exeify pack ...` → `OK: <path>`).
 

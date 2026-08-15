@@ -3,8 +3,8 @@
   "owner": "44886",
   "plugins": [
     {
-      "name": "exeify-packer",
-      "source": "./plugins/exeify-packer",
+      "name": "exeify-web2exe",
+      "source": "./plugins/exeify-web2exe",
       "description": "把网页/网址打包成 Windows exe（双击即运行、免安装，用系统 WebView2）。Package a website — a local folder or a URL — into a standalone Windows .exe. Windows only.",
       "displayName": "Exeify Web→exe Packer",
       "version": "0.4.1",

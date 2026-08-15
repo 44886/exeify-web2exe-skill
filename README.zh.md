@@ -26,7 +26,7 @@ AI 会自动调用 `exeify.exe pack ...`，产出一个自包含的 `.exe`。
 
 ```
 /plugin marketplace add 44886/exeify-web2exe-skill
-/plugin install exeify-packer@exeify
+/plugin install exeify-web2exe@exeify
 ```
 
 装好即可。之后你要求“把网页/网址打包成 exe”时，技能会自动加载。
@@ -38,7 +38,7 @@ AI 会自动调用 `exeify.exe pack ...`，产出一个自包含的 `.exe`。
 
 ```bash
 git clone https://github.com/44886/exeify-web2exe-skill.git /tmp/exeify-skill
-cp -r /tmp/exeify-skill/plugins/exeify-packer/skills/exeify-packer ~/.claude/skills/exeify-packer
+cp -r /tmp/exeify-skill/plugins/exeify-web2exe/skills/exeify-web2exe ~/.claude/skills/exeify-web2exe
 ```
 
 技能就是标准的 `SKILL.md` + 内置 `exeify.exe`，任何支持
@@ -62,9 +62,9 @@ exeify.exe pack --url <网址>   --out <app.exe> [选项...]
 
 ```
 .claude-plugin/marketplace.json                 # 市场清单
-plugins/exeify-packer/
+plugins/exeify-web2exe/
 ├── .claude-plugin/plugin.json                  # 插件清单
-└── skills/exeify-packer/
+└── skills/exeify-web2exe/
     ├── SKILL.md                                # 技能定义（给 AI 的指令）
     └── exeify.exe                              # 内置 Exeify 打包器（Windows）
 doc/cover.png · README.md · README.zh.md · LICENSE
@@ -73,7 +73,7 @@ doc/cover.png · README.md · README.zh.md · LICENSE
 ## 更新
 
 Exeify 发新版后，用 [Exeify releases](https://github.com/44886/Exeify/releases) 最新的
-`exeify.exe` 替换 `plugins/exeify-packer/skills/exeify-packer/exeify.exe` 即可。
+`exeify.exe` 替换 `plugins/exeify-web2exe/skills/exeify-web2exe/exeify.exe` 即可。
 CLI 契约稳定（`exeify pack ...` → `OK: <路径>`）。
 
 ## 许可证
