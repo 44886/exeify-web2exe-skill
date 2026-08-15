@@ -19,6 +19,16 @@ compatibility: "Windows only. The bundled exeify.exe is a Windows executable; pa
      https://github.com/44886/Exeify/releases/latest 下载最新的 `exeify-*-windows-x64.exe`，
      重命名为 `exeify.exe` 放到本 skill 目录后再用。
 
+## 检查 Exeify 是否有新版（建议顺带做一次，非阻塞）
+- 本 skill 内置的 Exeify 版本：**v0.4.0**。
+- 检查主仓库最新版：`GET https://api.github.com/repos/44886/Exeify/releases/latest`（带 header
+  `User-Agent: exeify-skill`），取 `tag_name`（形如 `v0.4.1`），与上面的内置版本比较。
+- 若最新版**更高** → 用**一句话**提示用户（**不要因此中断打包，仍照常出包**）：
+  「Exeify 有新版 `<tag>`（当前内置 v0.4.0）。可到 https://github.com/44886/Exeify/releases
+  下载最新 `exeify-*-windows-x64.exe` 替换本 skill 里的 `exeify.exe`；打包器界面里也有
+  『检查更新』可自更新。」
+- 无网络 / 请求失败 / 拿不到版本 → **静默跳过**，绝不影响打包。每次会话最多提示一次，别反复刷屏。
+
 ## 向用户问清这些（缺就问，别乱猜）
 - **源**（二选一）：要打包的**本地网页目录**（含 index.html 的文件夹）**或**一个**在线网址**（http/https）。
 - **输出路径**：产物 `.exe` 存哪、叫什么（默认可放在源目录旁，如 `app.exe`）。
