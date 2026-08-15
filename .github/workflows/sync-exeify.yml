@@ -1,0 +1,62 @@
+name: Sync bundled exeify.exe
+
+# 自动把内置的 exeify.exe 同步到 Exeify 主仓库的最新 Release。
+# 触发：每天定时 + 可在 Actions 页手动一键运行（Run workflow）。
+# 使用仓库自带的 GITHUB_TOKEN 推送到本仓库，无需额外密钥。
+
+on:
+  schedule:
+    - cron: "0 2 * * *"   # 每天 02:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 检查并同步到最新 Exeify Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          PLUGIN=plugins/exeify-web2exe/.claude-plugin/plugin.json
+          MARKET=.claude-plugin/marketplace.json
+          EXE=plugins/exeify-web2exe/skills/exeify-web2exe/exeify.exe
+
+          # 主仓库最新 release
+          LATEST=$(curl -sSL -H "Authorization: Bearer $GH_TOKEN" \
+                   -H "Accept: application/vnd.github+json" \
+                   https://api.github.com/repos/44886/Exeify/releases/latest)
+          TAG=$(echo "$LATEST" | jq -r '.tag_name')          # 形如 v0.4.1
+          VER="${TAG#v}"
+          URL=$(echo "$LATEST" | jq -r '.assets[] | select(.name|endswith(".exe")) | .browser_download_url' | head -1)
+          CUR=$(jq -r '.version' "$PLUGIN")
+          echo "latest=$VER  current=$CUR"
+
+          if [ -z "$VER" ] || [ "$VER" = "null" ] || [ -z "$URL" ] || [ "$URL" = "null" ]; then
+            echo "未取到有效的最新版本/资产，跳过。"; exit 0
+          fi
+          if [ "$VER" = "$CUR" ]; then
+            echo "已是最新（$VER），无需更新。"; exit 0
+          fi
+
+          echo "下载 $TAG 的 exe..."
+          curl -sSL "$URL" -o "$EXE"
+
+          # 版本号写进两个清单（SKILL.md 用 exeify version 动态读，无需改）
+          tmp=$(mktemp); jq --arg v "$VER" '.version=$v' "$PLUGIN" > "$tmp" && mv "$tmp" "$PLUGIN"
+          tmp=$(mktemp); jq --arg v "$VER" '.plugins[0].version=$v' "$MARKET" > "$tmp" && mv "$tmp" "$MARKET"
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "无实际变化。"; exit 0
+          fi
+          git commit -m "chore: 自动同步内置 exeify.exe 到 $TAG"
+          git push
+          echo "已同步到 $TAG。"
