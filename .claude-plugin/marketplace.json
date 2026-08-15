@@ -1,0 +1,17 @@
+{
+  "name": "exeify",
+  "owner": "44886",
+  "plugins": [
+    {
+      "name": "exeify-packer",
+      "source": "./plugins/exeify-packer",
+      "description": "把网页/网址打包成 Windows exe（双击即运行、免安装，用系统 WebView2）。Package a website — a local folder or a URL — into a standalone Windows .exe. Windows only.",
+      "displayName": "Exeify Web→exe Packer",
+      "version": "0.4.0",
+      "homepage": "https://github.com/44886/Exeify",
+      "repository": "https://github.com/44886/exeify-web2exe-skill",
+      "keywords": ["exe", "packager", "webview2", "windows", "网页打包", "web2exe"],
+      "license": "Apache-2.0"
+    }
+  ]
+}
