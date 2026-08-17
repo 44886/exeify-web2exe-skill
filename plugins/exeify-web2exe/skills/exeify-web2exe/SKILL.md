@@ -1,6 +1,6 @@
 ---
 name: exeify-web2exe
-description: "把网页打包成 Windows exe 的技能。当用户想把「一个本地 HTML/CSS/JS 网页文件夹」或「一个在线网址」打包成可双击运行、免安装的独立 Windows .exe（用系统自带 WebView2 渲染，终端用户无需装任何东西）时使用；可设置窗口标题/尺寸/全屏、程序图标、启动页、源码保护等。仅 Windows。 | Use when the user wants to package a website — a local HTML/CSS/JS folder or an online URL — into a standalone, double-click-to-run Windows .exe (rendered via the system WebView2, no install for end users); supports window title/size/fullscreen, app icon, splash screen, and source protection. Windows only. | 触发/Triggers: 打包成exe、网页打包、网页转exe、把网址做成桌面程序、把文件夹做成exe、package website to exe、turn HTML folder into a desktop app、website to exe。"
+description: "把网页打包成 Windows exe 的技能。当用户想把「一个本地 HTML/CSS/JS 网页文件夹」或「一个在线网址」打包成可双击运行、免安装的独立 Windows .exe（用系统自带 WebView2 渲染，终端用户无需装任何东西）时使用；可设置窗口标题/尺寸/全屏、程序图标、启动页、源码保护等；还能**同时输出安卓 APK**（把同一个网页做成安卓 App，免 Android SDK）。仅 Windows 运行打包器。 | Use when the user wants to package a website — a local HTML/CSS/JS folder or an online URL — into a standalone, double-click-to-run Windows .exe (rendered via the system WebView2, no install for end users); supports window title/size/fullscreen, app icon, splash screen, and source protection; can also output an Android APK from the same website (no Android SDK needed). Packer runs on Windows only. | 触发/Triggers: 打包成exe、网页打包、网页转exe、把网址做成桌面程序、把文件夹做成exe、package website to exe、turn HTML folder into a desktop app、website to exe、网页转apk、打包成安卓app、把网页做成安卓应用、website to apk、web to android app。"
 license: Apache-2.0
 compatibility: "Windows only. The bundled exeify.exe is a Windows executable; packed apps rely on WebView2, which is built into Windows 10/11. Not usable on macOS or Linux."
 ---
@@ -38,17 +38,18 @@ compatibility: "Windows only. The bundled exeify.exe is a Windows executable; pa
 - 可选：窗口标题、窗口尺寸、是否**全屏/最大化**、程序**图标**、**启动图**、是否关闭**源码保护**（默认开）。
 
 ## 调用方式
-命名参数 CLI（推荐，能力全）：
+命名参数 CLI（推荐，能力全）。可输出 **Windows exe** 和/或 **安卓 APK**：
 ```
-exeify.exe pack --local <目录> [--entry index.html] --out <app.exe> [选项...]
-exeify.exe pack --url <网址>   --out <app.exe> [选项...]
+exeify.exe pack --local <目录> [--entry index.html] --out <app.exe> [--apk <app.apk>] [选项...]
+exeify.exe pack --url <网址>   --out <app.exe> [--apk <app.apk>] [选项...]
 ```
 参数表：
 
 | 参数 | 说明 | 默认 |
 |---|---|---|
 | `--local <目录>` / `--url <网址>` | 源，二选一必填 | — |
-| `--out <路径.exe>` | 输出产物（必须 .exe 结尾） | 必填 |
+| `--out <路径.exe>` | 输出 Windows exe（.exe 结尾） | 见下 |
+| `--apk <路径.apk>` | 输出安卓 APK（.apk 结尾）；应用名=--title、图标=--icon、启动图=--splash、全屏=--window fullscreen 自动复用，包名自动生成 | 见下 |
 | `--entry <文件>` | 本地入口文件（仅 --local） | index.html |
 | `--title <文字>` | 窗口标题 | App |
 | `--width <数字>` / `--height <数字>` | 窗口宽 / 高 | 1024 / 720 |
@@ -59,6 +60,9 @@ exeify.exe pack --url <网址>   --out <app.exe> [选项...]
 | `--splash-bg <#rrggbb>` | 启动图背景色 | #0f172a |
 | `--splash-sec <秒>` | 启动图最少显示秒数 | 1.5 |
 | `--no-protect` | 关闭源码保护（默认加密内嵌资源+禁用查看源码） | 开启 |
+
+- `--out` 与 `--apk` **至少给一个**，可**同时给**（一次同时产出 exe + apk）。
+- 安卓 APK **免 Android SDK 本地生成**；产物依赖系统自带的 Android System WebView（**Android 7+**）；安装需在手机开"未知来源"。用内置密钥签名，适合侧载/内部分发。
 
 用 `exeify.exe pack --help` 可随时打印完整用法。
 
